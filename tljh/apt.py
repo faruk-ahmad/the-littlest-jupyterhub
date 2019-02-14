@@ -25,7 +25,7 @@ def add_source(name, source_url, section):
     """
     # lsb_release is not installed in most docker images by default
     distro = subprocess.check_output(['/bin/bash', '-c', 'source /etc/os-release && echo ${VERSION_CODENAME}'], stderr=subprocess.STDOUT).decode().strip()
-    line = f'deb {source_url} {distro} {section}'
+    line = 'deb {source_url} {distro} {section}'.format(source_url=source_url, distro=distro, section=section)
     with open(os.path.join('/etc/apt/sources.list.d/', name + '.list'), 'a+') as f:
         # Write out deb line only if it already doesn't exist
         if f.read() != line:

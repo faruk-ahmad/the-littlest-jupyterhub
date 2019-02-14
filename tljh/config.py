@@ -95,12 +95,12 @@ def remove_item_from_config(config, property_path, value):
         if i == len(path_components) - 1:
             # Final component, it must be a list and we append to it
             if cur_path not in cur_part or not _is_list(cur_part[cur_path]):
-                raise ValueError(f'{property_path} is not a list')
+                raise ValueError('{} is not a list'.format(property_path))
             cur_part = cur_part[cur_path]
             cur_part.remove(value)
         else:
             if cur_path not in cur_part or not _is_dict(cur_part[cur_path]):
-                raise ValueError(f'{property_path} does not exist in config!')
+                raise ValueError('{} does not exist in config!'.format(property_path))
             cur_part = cur_part[cur_path]
 
     return config_copy

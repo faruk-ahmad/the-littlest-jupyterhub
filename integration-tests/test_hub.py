@@ -45,7 +45,7 @@ async def test_user_code_execute():
             await u.assert_code_output("5 * 4", "20", 5, 5)
 
             # Assert that the user exists
-            assert pwd.getpwnam(f'jupyter-{username}') is not None
+            assert pwd.getpwnam('jupyter-{username}'.format(username=username)) is not None
 
 
 @pytest.mark.asyncio
@@ -70,10 +70,10 @@ async def test_user_admin_add():
             await u.ensure_server()
 
             # Assert that the user exists
-            assert pwd.getpwnam(f'jupyter-{username}') is not None
+            assert pwd.getpwnam('jupyter-{username}'.format(username=username)) is not None
 
             # Assert that the user has admin rights
-            assert f'jupyter-{username}' in grp.getgrnam('jupyterhub-admins').gr_mem
+            assert 'jupyter-{username}' in grp.getgrnam('jupyterhub-admins').format(username=username).gr_mem
 
 
 # FIXME: Make this test pass
@@ -102,10 +102,10 @@ async def test_user_admin_remove():
             await u.ensure_server()
 
             # Assert that the user exists
-            assert pwd.getpwnam(f'jupyter-{username}') is not None
+            assert pwd.getpwnam('jupyter-{username}'.format(username=username)) is not None
 
             # Assert that the user has admin rights
-            assert f'jupyter-{username}' in grp.getgrnam('jupyterhub-admins').gr_mem
+            assert 'jupyter-{username}'.format(username=username) in grp.getgrnam('jupyterhub-admins').gr_mem
 
 
             assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'remove-item', 'users.admin', username)).wait()
@@ -116,7 +116,7 @@ async def test_user_admin_remove():
             await u.ensure_server()
 
             # Assert that the user does *not* have admin rights
-            assert f'jupyter-{username}' in grp.getgrnam('jupyterhub-admins').gr_mem
+            assert 'jupyter-{username}'.format(username=username) in grp.getgrnam('jupyterhub-admins').gr_mem
 
 
 @pytest.mark.asyncio
@@ -141,7 +141,7 @@ async def test_long_username():
                 await u.ensure_server()
 
                 # Assert that the user exists
-                system_username = generate_system_username(f'jupyter-{username}')
+                system_username = generate_system_username('jupyter-{username}'.format(username=username))
                 assert pwd.getpwnam(system_username) is not None
 
                 await u.stop_server()

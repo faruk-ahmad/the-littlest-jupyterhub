@@ -21,7 +21,7 @@ def test_pip_packages():
     Test extra user pip packages are installed
     """
     subprocess.check_call([
-        f'{USER_ENV_PREFIX}/bin/python3',
+        '{USER_ENV_PREFIX}/bin/python3'.format(USER_ENV_PREFIX=USER_ENV_PREFIX),
         '-c',
         'import django'
     ])
@@ -32,7 +32,7 @@ def test_conda_packages():
     Test extra user conda packages are installed
     """
     subprocess.check_call([
-        f'{USER_ENV_PREFIX}/bin/python3',
+        '{USER_ENV_PREFIX}/bin/python3'.format(USER_ENV_PREFIX=USER_ENV_PREFIX),
         '-c',
         'import hypothesis'
     ])

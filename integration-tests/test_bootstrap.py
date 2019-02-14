@@ -14,10 +14,10 @@ def test_ubuntu_too_old():
     subprocess.run([
         'docker', 'rm', '-f', container_name
     ])
-    
+
     # Start a detached Ubuntu 16.04 container
     subprocess.check_call([
-        'docker', 'run', '--detach', '--name', container_name, 'ubuntu:16.04', 
+        'docker', 'run', '--detach', '--name', container_name, 'ubuntu:16.04',
         '/bin/bash', '-c', 'sleep 1000s'
     ])
     # Install python3 inside the ubuntu container
@@ -32,7 +32,7 @@ def test_ubuntu_too_old():
     subprocess.check_call([
         'docker',
         'cp',
-        'bootstrap/', f'{container_name}:/srv'
+        'bootstrap/', '{container_name}:/srv'.format(container_name=container_name)
     ])
 
     # Run bootstrap script, validate that it fails appropriately

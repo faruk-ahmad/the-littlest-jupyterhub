@@ -324,7 +324,7 @@ def ensure_symlinks(prefix):
             #  tljh-config exists that isn't ours. We should *not* delete this file,
             # instead we throw an error and abort. Deleting files owned by other people
             # while running as root is dangerous, especially with symlinks involved.
-            raise FileExistsError(f'/usr/bin/tljh-config exists but is not a symlink to {tljh_config_src}')
+            raise FileExistsError('/usr/bin/tljh-config exists but is not a symlink to {}'.format(tljh_config_src))
         else:
             # We have a working symlink, so do nothing
             return
