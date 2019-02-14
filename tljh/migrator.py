@@ -26,15 +26,15 @@ def migrate_file(old_path, new_path):
         # new config file already created! still move the config,
         # but avoid collision
         timestamp = date.today().isoformat()
-        dest = dest_base = f"{new_path}.old.{timestamp}"
+        dest = dest_base = "{}.old.{}".format(new_path, timestamp)
         i = 0
         while os.path.exists(dest):
             # avoid collisions
-            dest = dest_base + f".{i}"
+            dest = dest_base + ".{}".format(i)
             i += 1
-        logger.warning(f"Found file in both old ({old_path}) and new ({new_path}).")
+        logger.warning("Found file in both old ({}) and new ({}).".format(old_path, new_path))
         logger.warning(
-            f"Moving {old_path} to {dest} to avoid clobbering.  Its contents will be ignored."
+            "Moving {} to {} to avoid clobbering.  Its contents will be ignored.".format(old_path, dest)
         )
     else:
         dest = new_path
@@ -55,7 +55,7 @@ def migrate_directory(old_dir, new_dir):
             else:
                 migrate_file(src, dest)
     else:
-        logger.warning(f"Moving directory to new location {old_dir} -> {new_dir}")
+        logger.warning("Moving directory to new location {} -> {}".format(old_dir, new_dir)
         shutil.move(old_dir, new_dir)
 
 
