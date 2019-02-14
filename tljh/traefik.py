@@ -42,7 +42,7 @@ def ensure_traefik_binary(prefix):
 
     traefik_url = (
         "https://github.com/containous/traefik/releases"
-        "/download/v{}/traefik_{}".format(traefik_version, palat)
+        "/download/v{}/traefik_{}".format(traefik_version, plat)
     )
     print("Downloading traefik {}...".format(traefik_version))
     # download the file
@@ -52,7 +52,7 @@ def ensure_traefik_binary(prefix):
     # verify that we got what we expected
     checksum = checksum_file(traefik_bin)
     if checksum != checksums[plat]:
-        raise IOError("Checksum failed {}: {} != {}".format(traefik_bin, checksum, checksums[plat])
+        raise IOError("Checksum failed {}: {} != {}".format(traefik_bin, checksum, checksums[plat]))
 
 
 def ensure_traefik_config(state_dir):
