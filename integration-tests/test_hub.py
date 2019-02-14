@@ -1,7 +1,14 @@
 import requests
 from hubtraf.user import User
 from hubtraf.auth.dummy import login_dummy
-import secrets
+
+try:
+    from secrets import token_hex
+except ImportError:
+    from os import urandom
+    def token_hex(nbytes=none):
+        return urandom(nbytes).hex()
+
 import pytest
 from functools import partial
 import asyncio
@@ -29,7 +36,7 @@ async def test_user_code_execute():
     # This *must* be localhost, not an IP
     # aiohttp throws away cookies if we are connecting to an IP!
     hub_url = 'http://localhost'
-    username = secrets.token_hex(8)
+    username = token_hex(8)
 
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'set', 'auth.type', 'dummyauthenticator.DummyAuthenticator')).wait()
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'reload')).wait()
@@ -56,7 +63,7 @@ async def test_user_admin_add():
     # This *must* be localhost, not an IP
     # aiohttp throws away cookies if we are connecting to an IP!
     hub_url = 'http://localhost'
-    username = secrets.token_hex(8)
+    username = token_hex(8)
 
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'set', 'auth.type', 'dummyauthenticator.DummyAuthenticator')).wait()
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'add-item', 'users.admin', username)).wait()
@@ -88,7 +95,7 @@ async def test_user_admin_remove():
     # This *must* be localhost, not an IP
     # aiohttp throws away cookies if we are connecting to an IP!
     hub_url = 'http://localhost'
-    username = secrets.token_hex(8)
+    username = token_hex(8)
 
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'set', 'auth.type', 'dummyauthenticator.DummyAuthenticator')).wait()
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'add-item', 'users.admin', username)).wait()
@@ -127,7 +134,7 @@ async def test_long_username():
     # This *must* be localhost, not an IP
     # aiohttp throws away cookies if we are connecting to an IP!
     hub_url = 'http://localhost'
-    username = secrets.token_hex(32)
+    username = token_hex(32)
 
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'set', 'auth.type', 'dummyauthenticator.DummyAuthenticator')).wait()
     assert 0 == await (await asyncio.create_subprocess_exec(*TLJH_CONFIG_PATH, 'reload')).wait()
